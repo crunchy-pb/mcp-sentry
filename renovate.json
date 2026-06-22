@@ -1,0 +1,15 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":semanticCommits", ":dependencyDashboard"],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "matchManagers": ["npm", "dockerfile", "github-actions"],
+      "rangeStrategy": "pin"
+    },
+    {
+      "matchPackageNames": ["@sentry/mcp-server"],
+      "groupName": "sentry mcp server"
+    }
+  ]
+}
