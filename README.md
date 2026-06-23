@@ -26,8 +26,8 @@ docker run --rm -i \
 
 The image publishes MCP discovery metadata using OCI/Docker labels:
 
-- `io.github.crunchy-pb.integration.name` identifies the server as `io.github.getsentry/sentry-mcp`.
-- `io.github.crunchy-pb.integration.config-schema` contains the JSON Schema from `config.schema.json`, describing supported configuration environment variables, secret fields, enums, URI formats, and mutually exclusive Sentry host settings.
+- `uk.unrtd.pb.integration.name` identifies the server as `io.github.getsentry/sentry-mcp`.
+- `uk.unrtd.pb.integration.config-schema` contains the JSON Schema from `config.schema.json`, describing supported configuration environment variables, secret fields, enums, URI formats, and mutually exclusive Sentry host settings.
 
 Use `config.schema.json` as the readable source for the embedded label when updating supported environment variables. The `config-schema:label` npm script compacts that schema for the Docker build argument used by CI and release builds.
 
