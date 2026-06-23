@@ -4,10 +4,14 @@ ARG NODE_VERSION=22.16.0
 ARG ALPINE_VERSION=3.22
 FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS runtime
 
+ARG MCP_CONFIG_SCHEMA="{}"
+
 LABEL org.opencontainers.image.title="Sentry MCP Server" \
       org.opencontainers.image.description="Production container for @sentry/mcp-server" \
       org.opencontainers.image.source="https://github.com/getsentry/sentry-mcp" \
-      org.opencontainers.image.licenses="MIT"
+      org.opencontainers.image.licenses="MIT" \
+      io.modelcontextprotocol.server.name="io.github.getsentry/sentry-mcp" \
+      io.modelcontextprotocol.server.config_schema="${MCP_CONFIG_SCHEMA}"
 
 ENV NODE_ENV=production \
     NPM_CONFIG_UPDATE_NOTIFIER=false \

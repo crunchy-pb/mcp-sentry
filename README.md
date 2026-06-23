@@ -5,7 +5,9 @@ Production container packaging for the official `@sentry/mcp-server` package.
 ## Build
 
 ```bash
-docker build -t mcp-sentry:local .
+docker build \
+  --build-arg MCP_CONFIG_SCHEMA="$(npm run --silent config-schema:label)" \
+  -t mcp-sentry:local .
 ```
 
 The runtime pins Node, Alpine, npm, and `@sentry/mcp-server` versions in `package.json` and the Docker build arguments.
@@ -16,9 +18,18 @@ Pass the environment expected by `@sentry/mcp-server` for your MCP transport and
 
 ```bash
 docker run --rm -i \
-  -e SENTRY_AUTH_TOKEN=your-token \
+  -e SENTRY_ACCESS_TOKEN=your-token \
   mcp-sentry:local
 ```
+
+## Container metadata
+
+The image publishes MCP discovery metadata using OCI/Docker labels:
+
+- `io.modelcontextprotocol.server.name` identifies the server as `io.github.getsentry/sentry-mcp`.
+- `io.modelcontextprotocol.server.config_schema` contains the JSON Schema from `config.schema.json`, describing supported configuration environment variables, secret fields, enums, URI formats, and mutually exclusive Sentry host settings.
+
+Use `config.schema.json` as the readable source for the embedded label when updating supported environment variables. The `config-schema:label` npm script compacts that schema for the Docker build argument used by CI and release builds.
 
 ## Releases
 

@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/getsentry/sentry-mcp/config.schema.json",
+  "title": "Sentry MCP Server Environment Configuration",
+  "description": "Environment variables supported by the Sentry MCP server container.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "SENTRY_ACCESS_TOKEN": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Sentry User Auth Token with API access. Required for self-hosted instances and recommended for non-interactive container use.",
+      "writeOnly": true
+    },
+    "SENTRY_CLIENT_ID": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Override the OAuth client ID used for the sentry.io device-code authentication flow."
+    },
+    "SENTRY_URL": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://",
+      "description": "Full HTTPS URL for a self-hosted Sentry instance, for example https://sentry.example.com. Mutually exclusive with SENTRY_HOST."
+    },
+    "SENTRY_HOST": {
+      "type": "string",
+      "pattern": "^(?!https?://)[^/]+$",
+      "description": "Hostname, and optional port, for a self-hosted Sentry instance, for example sentry.example.com or sentry.internal:9000. Do not include a URL scheme. Mutually exclusive with SENTRY_URL."
+    },
+    "MCP_URL": {
+      "type": "string",
+      "format": "uri",
+      "description": "Public URL for the MCP server when a client or proxy needs to know the externally reachable endpoint."
+    },
+    "SENTRY_DSN": {
+      "type": "string",
+      "format": "uri",
+      "description": "DSN used by the MCP server for its own telemetry reporting. Overrides DEFAULT_SENTRY_DSN when both are set."
+    },
+    "DEFAULT_SENTRY_DSN": {
+      "type": "string",
+      "format": "uri",
+      "description": "Fallback DSN used by the MCP server for its own telemetry reporting when SENTRY_DSN is unset."
+    },
+    "OPENAI_API_KEY": {
+      "type": "string",
+      "minLength": 1,
+      "description": "OpenAI or Azure OpenAI API key for embedded-agent and AI-powered search features.",
+      "writeOnly": true
+    },
+    "OPENAI_API_VERSION": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Azure OpenAI API version used when EMBEDDED_AGENT_PROVIDER is azure-openai."
+    },
+    "OPENAI_MODEL": {
+      "type": "string",
+      "minLength": 1,
+      "default": "gpt-5",
+      "description": "OpenAI or Azure OpenAI model for embedded-agent features."
+    },
+    "ANTHROPIC_API_KEY": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Anthropic API key for embedded-agent and AI-powered search features.",
+      "writeOnly": true
+    },
+    "ANTHROPIC_MODEL": {
+      "type": "string",
+      "minLength": 1,
+      "default": "claude-sonnet-4-5",
+      "description": "Anthropic model for embedded-agent features."
+    },
+    "EMBEDDED_AGENT_PROVIDER": {
+      "type": "string",
+      "enum": ["openai", "azure-openai", "anthropic"],
+      "description": "LLM provider override for embedded-agent features. If unset, the server auto-detects from available API keys."
+    },
+    "MCP_SKILLS": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+(,[A-Za-z0-9_-]+)*$",
+      "description": "Comma-separated list of skills to grant. If unset, all skills are enabled."
+    },
+    "MCP_DISABLE_SKILLS": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+(,[A-Za-z0-9_-]+)*$",
+      "description": "Comma-separated list of skills to disable, for example seer."
+    },
+    "SENTRY_MCP_AUTH_CACHE": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Path to the OAuth token cache file used by interactive authentication flows."
+    },
+    "LOG_LEVEL": {
+      "type": "string",
+      "enum": ["trace", "debug", "info", "warn", "error", "fatal", "silent"],
+      "default": "info",
+      "description": "Minimum log level emitted by the server."
+    },
+    "NODE_ENV": {
+      "type": "string",
+      "enum": ["production", "development", "test"],
+      "default": "production",
+      "description": "Node.js runtime environment. The container defaults to production."
+    }
+  },
+  "dependentSchemas": {
+    "SENTRY_URL": {
+      "not": { "required": ["SENTRY_HOST"] },
+      "errorMessage": "SENTRY_URL and SENTRY_HOST are mutually exclusive."
+    },
+    "SENTRY_HOST": {
+      "not": { "required": ["SENTRY_URL"] },
+      "errorMessage": "SENTRY_HOST and SENTRY_URL are mutually exclusive."
+    }
+  }
+}
