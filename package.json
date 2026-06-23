@@ -6,7 +6,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "release": "semantic-release"
+    "release": "semantic-release",
+    "config-schema:label": "node scripts/config-schema-label.mjs",
+    "config-schema:check": "node -e \"const {execFileSync}=require('node:child_process'); JSON.parse(execFileSync('npm',['run','--silent','config-schema:label'],{encoding:'utf8'}));\""
   },
   "dependencies": {
     "@sentry/mcp-server": "0.35.0"

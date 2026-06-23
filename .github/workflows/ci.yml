@@ -18,6 +18,9 @@ jobs:
         uses: actions/checkout@v4.2.2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3.10.0
+      - name: Generate integration config schema label
+        id: integration-config-schema
+        run: echo "schema=$(npm run --silent config-schema:label)" >> "$GITHUB_OUTPUT"
       - name: Build image
         uses: docker/build-push-action@v6.18.0
         with:
@@ -25,3 +28,5 @@ jobs:
           push: false
           load: false
           tags: mcp-sentry:ci
+          build-args: |
+            INTEGRATION_CONFIG_SCHEMA=${{ steps.integration-config-schema.outputs.schema }}
