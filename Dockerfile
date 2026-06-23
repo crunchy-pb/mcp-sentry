@@ -10,8 +10,8 @@ LABEL org.opencontainers.image.title="Sentry MCP Server" \
       org.opencontainers.image.description="Production container for @sentry/mcp-server" \
       org.opencontainers.image.source="https://github.com/getsentry/sentry-mcp" \
       org.opencontainers.image.licenses="MIT" \
-      io.github.crunchy-pb.integration.name="io.github.getsentry/sentry-mcp" \
-      io.github.crunchy-pb.integration.config-schema="${INTEGRATION_CONFIG_SCHEMA}"
+      uk.unrtd.pb.integration.name="io.github.getsentry/sentry-mcp" \
+      uk.unrtd.pb.integration.config-schema="${INTEGRATION_CONFIG_SCHEMA}"
 
 ENV NODE_ENV=production \
     NPM_CONFIG_UPDATE_NOTIFIER=false \
