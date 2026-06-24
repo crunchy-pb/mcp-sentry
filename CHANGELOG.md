@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/crunchy-pb/mcp-sentry/compare/v1.0.1...v1.0.2) (2026-06-24)
+
+
+### Bug Fixes
+
+* read release package version correctly ([411f352](https://github.com/crunchy-pb/mcp-sentry/commit/411f35261960d592880d5ceadb13f44848820233))
+
 ## [1.0.1](https://github.com/crunchy-pb/mcp-sentry/compare/v1.0.0...v1.0.1) (2026-06-23)
 
 
